@@ -25,6 +25,34 @@ class Unit{
 		bool isDead();	
 };
 
+bool Unit::isDead(){
+	if (hp <= 0)return true;
+	else return false;
+}
+
+void Unit::guard(){
+	guard_on = true;
+}
+
+int Unit::beAttacked(int damage){
+	int damagecal;
+	if(guard_on == true)damagecal = (damage-def)/3;
+	else damagecal = damage-def;
+	hp -= damagecal;
+	return damagecal;
+}
+
+int Unit::attack(Unit &inputname){
+	return inputname.beAttacked(atk);
+}
+
+int Unit::heal(){
+	int healpoint = (rand()%21)+10; 
+	if(hp + healpoint >= hpmax)healpoint = hpmax-hp;
+	hp += healpoint;
+	return healpoint;
+}
+
 void Unit::create(string t){ 
 	if(t == "Hero"){
 		type = "Hero";
